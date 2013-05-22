@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name" >Trakt-fragments
+    </string>
+    <string name="action_settings" >Settings
+    </string>
+    <string name="hello_world" >Hello world!
+    </string>
+    <string name="episode">Episode Title</string>
+    <string name="votes">Votes</string>
+    <string name="overview">Overview</string>
+    <string name="network">Network</string>
+    <string name="on">on</string>
+    <string name="nextepisode">Next Episode</string>
+
+</resources>
