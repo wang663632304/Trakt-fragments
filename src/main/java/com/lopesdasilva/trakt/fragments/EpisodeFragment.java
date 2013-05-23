@@ -183,7 +183,7 @@ public class EpisodeFragment extends Fragment implements DownloadEpisodeInfo.onE
         }
 
         @Override
-        protected void onPostExecute(Void voids) {
+            protected void onPostExecute(Void voids) {
             if (e == null) {
                 Log.d("Trakt Fragments", "Updating seen status ui");
                 updateSeenUnseen();

@@ -68,25 +68,26 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
                               FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
-        Log.d("trakt", "tab position: " + tab.getPosition());
+        Log.d("trakt", "tab selected position: " + tab.getPosition());
         mViewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab,
                                 FragmentTransaction fragmentTransaction) {
-        Log.d("trakt", "tab position: " + tab.getPosition());
+        Log.d("trakt", "tab unselected position: " + tab.getPosition());
     }
 
     @Override
     public void onTabReselected(ActionBar.Tab tab,
                                 FragmentTransaction fragmentTransaction) {
-        Log.d("trakt", "tab position: " + tab.getPosition());
+        Log.d("trakt", "tab reselected position: " + tab.getPosition());
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        actionBar.removeAllTabs();
         Log.d("trakt", " Detaching ShowFragment should Remove all tabs");
     }
 
@@ -125,7 +126,7 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
                         actionBar.setSelectedNavigationItem(position);
                     }
                 });
-        mViewPager.setCurrentItem(1);
+
 
     }
 
@@ -144,15 +145,18 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
             Bundle arguments = new Bundle();
             arguments.putSerializable("show", mTVshow);
             Log.d("trakt", "Fragment position: " + position);
-            Fragment fragment = new SeasonsFragment();
+            Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = new SeasonsFragment();
-                    break;
-                case 1:
                     fragment = new ShowInfoFragment();
                     break;
+                case 1:
+                    fragment = new SeasonsFragment();
+                    break;
                 case 2:
+                    fragment = new CommentsFragment();
+                    break;
+                case 3:
                     fragment = new SeasonsFragment();
                     break;
 
@@ -164,7 +168,7 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -172,11 +176,13 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return "Shouts".toUpperCase(l);
-                case 1:
                     return "Info".toUpperCase(l);
-                case 2:
+                case 1:
                     return "Seasons".toUpperCase(l);
+                case 2:
+                    return "Shouts".toUpperCase(l);
+                case 3:
+                    return "Cast".toUpperCase(l);
             }
             return null;
         }

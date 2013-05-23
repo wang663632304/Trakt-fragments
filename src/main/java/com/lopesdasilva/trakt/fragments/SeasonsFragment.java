@@ -1,17 +1,18 @@
 package com.lopesdasilva.trakt.fragments;
 
-import android.R;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Toast;
 import com.jakewharton.trakt.ServiceManager;
+import com.jakewharton.trakt.entities.Response;
+import com.jakewharton.trakt.entities.Shout;
+import com.jakewharton.trakt.entities.TvShow;
 import com.jakewharton.trakt.entities.TvShowSeason;
 import com.lopesdasilva.trakt.Tasks.DownloadSeasonsInfo;
 import com.lopesdasilva.trakt.extras.UserChecker;
@@ -25,7 +26,7 @@ public class SeasonsFragment extends ListFragment {
 
 
     private View rootView;
-    private String show;
+    private TvShow show;
     private ServiceManager manager;
     private DownloadSeasonsInfo mTaskDownloadSeasons;
 
@@ -38,12 +39,15 @@ public class SeasonsFragment extends ListFragment {
 
 
         setRetainInstance(true);
-//        show = getArguments().getString("show_imdb");
+        show =(TvShow) getArguments().getSerializable("show");
 
-
+        if(savedInstanceState==null){
         manager = UserChecker.checkUserLogin(getActivity());
         Log.d("Trakt Fragments", "ServiceManager: " + manager);
 //        Log.d("Trakt Fragments", "Show_imdb received: " + show);
+
+        }
+
 
 
 

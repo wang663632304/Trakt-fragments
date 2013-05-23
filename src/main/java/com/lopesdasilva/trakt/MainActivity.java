@@ -17,8 +17,8 @@ import com.lopesdasilva.trakt.extras.UserChecker;
 
 public class MainActivity extends FragmentActivity {
 
-    String mUsername = "";
-    String mPassword = "";
+    String mUsername = "lopesdasilva";
+    String mPassword = "88f94d1bb6ceff3a063388a66a15a8380777338d";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
