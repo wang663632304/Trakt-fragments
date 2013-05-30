@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.androidquery.AQuery;
+import com.androidquery.callback.ImageOptions;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.Shout;
 import com.jakewharton.trakt.entities.TvShow;
@@ -26,16 +27,16 @@ import java.util.List;
 /**
  * Created by lopesdasilva on 22/05/13.
  */
-public class CommentsFragment extends ListFragment {
+public class ShowCommentsFragment extends ListFragment {
 
 
-    private View rootView;
+
     private TvShow show;
     private ServiceManager manager;
     private DownloadShowComments mTaskDownloadComments;
     private List<Shout> mShouts;
 
-    public CommentsFragment() {
+    public ShowCommentsFragment() {
     }
 
 
@@ -43,15 +44,17 @@ public class CommentsFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        setRetainInstance(true);
         if (savedInstanceState == null) {
-            show = (TvShow) getArguments().getSerializable("show");
 
+            setRetainInstance(true);
+            show = (TvShow) getArguments().getSerializable("show");
             manager = UserChecker.checkUserLogin(getActivity());
             Log.d("Trakt", "ServiceManager: " + manager);
             Log.d("Trakt", "show received on commentFragments: " + show.title);
+            if(mTaskDownloadComments==null){
             mTaskDownloadComments = new DownloadShowComments();
             mTaskDownloadComments.execute();
+            }
         }
 
 
@@ -88,7 +91,10 @@ public class CommentsFragment extends ListFragment {
 
     private void updateUI(List<Shout> response) {
         this.mShouts=response;
+
+        getListView().setDivider(null);
         setListAdapter(new ShowSeasonsAdapter(getActivity(), response));
+
     }
 
     @Override
@@ -172,7 +178,9 @@ public class CommentsFragment extends ListFragment {
             } else {
 
                 aq.id(R.id.imageViewSpoiler).gone();
-                aq.id(R.id.imageViewCommentAvatar).image(shout.user.avatar).visible();
+                ImageOptions options = new ImageOptions();
+                options.round = 360;
+                aq.id(R.id.imageViewCommentAvatar).image(shout.user.avatar,options).visible();
                 aq.id(R.id.textViewCommentText).text(shout.shout).visible();
                 aq.id(R.id.textViewCommentUsername).text(shout.user.username).visible();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy hh:mm");

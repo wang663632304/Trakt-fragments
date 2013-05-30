@@ -143,21 +143,24 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
         @Override
         public Fragment getItem(int position) {
             Bundle arguments = new Bundle();
-            arguments.putSerializable("show", mTVshow);
+
             Log.d("trakt", "Fragment position: " + position);
             Fragment fragment = null;
             switch (position) {
                 case 0:
+                    arguments.putSerializable("show", mTVshow);
                     fragment = new ShowInfoFragment();
                     break;
                 case 1:
                     fragment = new SeasonsFragment();
                     break;
                 case 2:
-                    fragment = new CommentsFragment();
+                    arguments.putSerializable("show", mTVshow);
+                    fragment = new ShowCommentsFragment();
                     break;
                 case 3:
-                    fragment = new SeasonsFragment();
+                    arguments.putSerializable("showpeople", mTVshow.people);
+                    fragment = new ShowCastFragment();
                     break;
 
             }

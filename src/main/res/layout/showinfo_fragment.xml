@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView1"
-    
+
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
@@ -11,7 +11,7 @@
         android:background="@color/light_grey"
         android:orientation="vertical" >
 
-        <LinearLayout
+        <RelativeLayout
             style="@style/nowCardStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,19 +32,25 @@
                 style="@style/CardTitleBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/imageViewShowFanart"
                 android:text="Large Text"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <View
+                android:id="@+id/viewLine"
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
                 android:padding="2dp"
+                android:layout_below="@+id/relativeLayoutShowStats"
                 android:background="@color/light_grey" />
 
             <RelativeLayout
+                android:id="@+id/relativeLayoutShowStats"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" >
+                android:layout_gravity="center_horizontal"
+                android:layout_below="@+id/textViewShowInfo"
+                android:layout_alignLeft="@+id/imageViewShowFanart">
 
                 <ImageView
                     android:id="@+id/imageViewSeasonEpisodeScreen"
@@ -101,12 +107,55 @@
 
             <TextView
                 android:id="@+id/textViewShowNextEpisode"
+                android:gravity="left"
                 style="@style/Item.Sticky.1Line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/nextepisode"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-        </LinearLayout>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_below="@+id/viewLine"
+                android:layout_alignLeft="@+id/viewLine"
+                android:layout_toLeftOf="@+id/buttonShowNextEpisode"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageViewShowLovedTag"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/hearth_tag"
+                android:visibility="gone"/>
+
+            <Button
+                style="@style/CardText.1Line"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="EPISODE"
+
+                android:id="@+id/buttonShowNextEpisode"
+                android:layout_alignBottom="@+id/textViewShowNextEpisodeDate"
+                android:layout_alignRight="@+id/viewLine"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                style="@style/CardText.1Line"
+                android:id="@+id/textViewShowNextEpisodeDate"
+                android:layout_below="@+id/textViewShowNextEpisode"
+                android:layout_alignParentLeft="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageViewShowHatedTag"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"
+                android:src="@drawable/hated_tag"/>
+
+        </RelativeLayout>
 
         <LinearLayout
             style="@style/nowCardStyle"

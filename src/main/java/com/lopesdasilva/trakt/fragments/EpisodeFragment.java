@@ -269,7 +269,8 @@ public class EpisodeFragment extends Fragment implements DownloadEpisodeInfo.onE
 
         AQuery aq = new AQuery(getActivity());
         aq.id(R.id.textViewEpisodeTitle).text(episode_info.episode.title);
-        aq.id(R.id.imageViewEpisodeScreen).image(episode_info.episode.images.screen, false, true, 600, R.drawable.episode_backdrop);
+        aq.id(R.id.textViewEpisodeSeasonNumber).text("S"+episode_info.episode.season+"E"+episode_info.episode.number);
+        aq.id(R.id.imageViewEpisodeScreen).image(episode_info.episode.images.screen, false, true, 600, R.drawable.episode_backdrop,null,AQuery.FADE_IN);
         aq.id(R.id.textViewEpisodeOverview).text(episode_info.episode.overview);
         aq.id(R.id.textViewEpisodeRatingsPercentage).text(episode_info.episode.ratings.percentage + "%");
         aq.id(R.id.textViewEpisodeRatingsVotes).text(episode_info.episode.ratings.votes + " votes");

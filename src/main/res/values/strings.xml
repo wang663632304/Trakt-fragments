@@ -13,5 +13,8 @@
     <string name="network">Network</string>
     <string name="on">on</string>
     <string name="nextepisode">Next Episode</string>
+<array name="calendar_longclick">
+    <item>Mark as seen</item>
 
+</array>
 </resources>

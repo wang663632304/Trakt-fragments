@@ -9,10 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 import com.jakewharton.trakt.ServiceManager;
-import com.lopesdasilva.trakt.activities.EpisodeActivity;
-import com.lopesdasilva.trakt.activities.MovieActivity;
-import com.lopesdasilva.trakt.activities.SeasonsActivity;
-import com.lopesdasilva.trakt.activities.ShowActivity;
+import com.lopesdasilva.trakt.activities.*;
 import com.lopesdasilva.trakt.extras.UserChecker;
 
 public class MainActivity extends FragmentActivity {
@@ -52,7 +49,7 @@ public class MainActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 Bundle arguments = new Bundle();
-                arguments.putString("show_imdb", "tt0944947");
+                arguments.putString("show_imdb", "tt2188671");
 
                 Intent i = new Intent(getBaseContext(), ShowActivity.class);
                 i.putExtras(arguments);
@@ -70,10 +67,24 @@ public class MainActivity extends FragmentActivity {
 
 
                 Bundle arguments = new Bundle();
-                arguments.putString("movie_imdb", "tt1228705");
+                arguments.putString("movie_imdb", "tt1853728");
                 Intent i = new Intent(getBaseContext(), MovieActivity.class);
                 i.putExtras(arguments);
 
+                startActivity(i);
+                overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
+            }
+        });
+
+        findViewById(R.id.buttonCalendar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Launching Calendar Activity", Toast.LENGTH_SHORT).show();
+                Log.d("Trakt", "Launching Calendar Activity");
+
+
+
+                Intent i = new Intent(getBaseContext(), CalendarActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.push_left_out, R.anim.push_left_in);
             }

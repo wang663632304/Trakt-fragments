@@ -165,10 +165,10 @@ public class MovieFragment extends Fragment implements DownloadMovieInfo.OnMovie
             try {
                 if (movie_info.watched) {
                     Log.d("Trakt Fragments", "Changing to unseen");
-                    return manager.movieService().seen().movie(movie, 1, new Date()).fire();
+                    return manager.movieService().unseen().movie(movie).fire();
                 } else {
                     Log.d("Trakt Fragments", "Changing to seen");
-                    return manager.movieService().unseen().movie(movie).fire();
+                    return manager.movieService().seen().movie(movie, 1, new Date()).fire();
                 }
             } catch (Exception e) {
                 this.e = e;
