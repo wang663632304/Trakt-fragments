@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--<GridView xmlns:android="http://schemas.android.com/apk/res/android"-->
+          <!--xmlns:tools="http://schemas.android.com/tools"-->
+          <!--android:id="@+id/gridLayoutShows"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:columnWidth="115dp"-->
+            <!--android:numColumns="auto_fit"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--tools:listitem="@layout/shows_grid_item"-->
+            <!--android:stretchMode="spacingWidthUniform">-->
+
+<!--</GridView>-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/linearLayoushows"
+              android:orientation="horizontal"
+              android:gravity="center_horizontal"
+              android:dividerPadding="10dp"/>

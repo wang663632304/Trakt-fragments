@@ -15,6 +15,16 @@
     <string name="nextepisode">Next Episode</string>
 <array name="calendar_longclick">
     <item>Mark as seen</item>
-
+<item>Love</item>
 </array>
+    <array name="navigation_drawer">
+        <item>Trending</item>
+        <item>Library</item>
+        <item>Recommended</item>
+        <item>Calendar</item>
+    </array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="app_not_available">App not available</string>
+    <string name="search_hint">What are you looking for?</string>
 </resources>

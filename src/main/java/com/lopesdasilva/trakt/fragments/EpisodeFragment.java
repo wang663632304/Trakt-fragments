@@ -14,10 +14,13 @@ import com.androidquery.AQuery;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.Response;
 import com.jakewharton.trakt.entities.TvEntity;
+import com.jakewharton.trakt.entities.TvShowEpisode;
 import com.jakewharton.trakt.enumerations.Rating;
 import com.lopesdasilva.trakt.R;
 import com.lopesdasilva.trakt.Tasks.CheckInChecker;
 import com.lopesdasilva.trakt.Tasks.DownloadEpisodeInfo;
+import com.lopesdasilva.trakt.Tasks.MarkEpisodeWatchlistUnWatchlist;
+import com.lopesdasilva.trakt.Tasks.MarkSeenUnseen;
 import com.lopesdasilva.trakt.extras.UserChecker;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +29,7 @@ import java.util.Date;
 /**
  * Created by lopesdasilva on 17/05/13.
  */
-public class EpisodeFragment extends Fragment implements DownloadEpisodeInfo.onEpisodeTaskComplete {
+public class EpisodeFragment extends Fragment implements DownloadEpisodeInfo.onEpisodeTaskComplete, MarkSeenUnseen.OnMarkSeenUnseenCompleted, MarkEpisodeWatchlistUnWatchlist.WatchlistUnWatchlistCompleted {
     private View rootView;
     private String show;
     private int season;
@@ -126,13 +129,14 @@ public class EpisodeFragment extends Fragment implements DownloadEpisodeInfo.onE
                 item.setActionView(mRefreshView);
 
                 Log.d("Trakt Fragments", "Unseen button clicked");
-                new EpisodeSeenUnseen().execute();
-                // do whatever
+                new MarkSeenUnseen(getActivity(),this,manager,episode_info.show,episode_info.episode,0).execute();
+
+
                 return true;
             case 2:
 
                 Log.d("Trakt Fragments", "Add/Rem watchlist button clicked");
-                new EpisodeWatchlist().execute();
+                new MarkEpisodeWatchlistUnWatchlist(getActivity(),this,manager,episode_info.show,episode_info.episode,0).execute();
                 return true;
             case 3:
 
@@ -160,72 +164,13 @@ public class EpisodeFragment extends Fragment implements DownloadEpisodeInfo.onE
         mTaskDownloadEpisode = null;
     }
 
-    private class EpisodeSeenUnseen extends AsyncTask<Void, Void, Void> {
-
-
-        private Exception e;
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            try {
-                if (episode_info.episode.watched) {
-                    Log.d("Trakt Fragments", "Changing to unseen");
-                    return manager.showService().episodeUnseen(show).episode(season, episode).fire();
-                } else {
-                    Log.d("Trakt Fragments", "Changing to seen");
-                    return manager.showService().episodeSeen(show).episode(season, episode).fire();
-                }
-            } catch (Exception e) {
-                this.e = e;
-                return null;
-            }
-        }
-
-        @Override
-            protected void onPostExecute(Void voids) {
-            if (e == null) {
-                Log.d("Trakt Fragments", "Updating seen status ui");
-                updateSeenUnseen();
-            } else {
-                Log.d("Trakt Fragments", "Error marking episode as unseen: " + e.getMessage());
-
-            }
-        }
+    @Override
+    public void OnMarkSeenUnseenCompleted(int position) {
+        //Dont use position
+        updateSeenUnseen();
     }
 
-    private class EpisodeWatchlist extends AsyncTask<Void, Void, Void> {
 
-
-        private Exception e;
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-
-            try {
-                if (episode_info.episode.inWatchlist) {
-                    Log.d("Trakt Fragments", "Adding to Unwatchlist");
-                    return manager.showService().episodeUnwatchlist(show).episode(season, episode).fire();
-                } else {
-                    Log.d("Trakt Fragments", "Adding to Watchlist");
-                    return manager.showService().episodeWatchlist(show).episode(season, episode).fire();
-                }
-            } catch (Exception e) {
-                this.e = e;
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Void voids) {
-            if (e == null) {
-                Log.d("Trakt Fragments", "Updating watchlist status ui");
-                updateWatchlist();
-            } else {
-                Log.d("Trakt Fragments", "Error changing watchlist status: " + e.getMessage());
-            }
-        }
-    }
 
     private void updateWatchlist() {
         AQuery aq = new AQuery(getActivity());
@@ -270,7 +215,7 @@ public class EpisodeFragment extends Fragment implements DownloadEpisodeInfo.onE
         AQuery aq = new AQuery(getActivity());
         aq.id(R.id.textViewEpisodeTitle).text(episode_info.episode.title);
         aq.id(R.id.textViewEpisodeSeasonNumber).text("S"+episode_info.episode.season+"E"+episode_info.episode.number);
-        aq.id(R.id.imageViewEpisodeScreen).image(episode_info.episode.images.screen, false, true, 600, R.drawable.episode_backdrop,null,AQuery.FADE_IN);
+        aq.id(R.id.imageViewEpisodeScreen).image(episode_info.episode.images.screen, false, true, 600, R.drawable.episode_backdrop, null, AQuery.FADE_IN);
         aq.id(R.id.textViewEpisodeOverview).text(episode_info.episode.overview);
         aq.id(R.id.textViewEpisodeRatingsPercentage).text(episode_info.episode.ratings.percentage + "%");
         aq.id(R.id.textViewEpisodeRatingsVotes).text(episode_info.episode.ratings.votes + " votes");
@@ -318,6 +263,11 @@ public class EpisodeFragment extends Fragment implements DownloadEpisodeInfo.onE
 
 
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void WatchlistUnWatchlistCompleted(int position) {
+        updateWatchlist();
     }
 
     private class EpisodeCheckIn extends AsyncTask<Void, Void, Response> {

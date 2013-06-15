@@ -41,11 +41,10 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
 
     public String show;
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.show_fragment, container, false);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
         if (savedInstanceState == null) {
             setRetainInstance(true);
             show = getArguments().getString("show_imdb");
@@ -59,9 +58,25 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
             mTaskDownloadShowInfo = new DownloadShowInfo(this, getActivity(), manager, show);
             mTaskDownloadShowInfo.execute();
         }
+
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.show_fragment, container, false);
+
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        setRetainInstance(true);
+
+    }
 
     @Override
     public void onTabSelected(ActionBar.Tab tab,
@@ -87,26 +102,34 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
     @Override
     public void onDetach() {
         super.onDetach();
-        actionBar.removeAllTabs();
+        if (actionBar != null)
+            actionBar.removeAllTabs();
         Log.d("trakt", " Detaching ShowFragment should Remove all tabs");
     }
 
     @Override
     public void onShowInfoTaskComplete(TvShow response) {
-        Toast.makeText(getActivity(), "Download Show info complete", Toast.LENGTH_SHORT).show();
+
         Log.d("Trakt", "Download show info complete");
 
-        actionBar = getActivity().getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setSubtitle(response.title);
+        updateShow(response);
+
+
+    }
+
+    private void updateShow(TvShow response) {
+        if(getActivity()!=null){
+            actionBar = getActivity().getActionBar();
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setSubtitle(response.title);
 
         mTVshow = response;
 
-        mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
+        mViewPager = (ViewPager) rootView.findViewById(R.id.show_pager);
         mSectionsPagerAdapter = new SectionsPagerAdapter(
                 getActivity().getSupportFragmentManager());
-        mSectionsPagerAdapter.notifyDataSetChanged();
+//        mSectionsPagerAdapter.notifyDataSetChanged();
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -127,7 +150,7 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
                     }
                 });
 
-
+        }
     }
 
     /**
@@ -152,6 +175,7 @@ public class ShowFragment extends Fragment implements ActionBar.TabListener, Dow
                     fragment = new ShowInfoFragment();
                     break;
                 case 1:
+                    arguments.putSerializable("show", mTVshow);
                     fragment = new SeasonsFragment();
                     break;
                 case 2:

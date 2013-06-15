@@ -23,15 +23,28 @@ import java.util.Date;
 public class ShowInfoFragment extends Fragment {
 
 
+    private TvShow mTVshow;
+    private View rootView;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.showinfo_fragment, container, false);
+        rootView = inflater.inflate(R.layout.showinfo_fragment, container, false);
 
         setRetainInstance(true);
 
-        TvShow mTVshow = (TvShow) getArguments().getSerializable("show");
-        updateUI(rootView, mTVshow);
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        setRetainInstance(true);
+
+        mTVshow = (TvShow) getArguments().getSerializable("show");
+
+        updateUI(rootView, mTVshow);
+
     }
 
     private void updateUI(View rootView, final TvShow show) {

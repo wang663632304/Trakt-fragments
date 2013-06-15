@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +22,6 @@ import java.text.SimpleDateFormat;
 public class CalendarFragment extends Fragment {
 
     private View rootView;
-    private ServiceManager manager;
     private WeekPager mWeekPagerAdapter;
     private ViewPager mViewPager;
 
@@ -29,24 +29,23 @@ public class CalendarFragment extends Fragment {
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (container == null) // must put this in
+            return null;
         rootView = inflater.inflate(R.layout.calendar_fragment, container, false);
-
-        if (savedInstanceState == null) {
-            setRetainInstance(true);
+        Log.d("Trakt", "CalendarFragment On CreateView savedinstace:" + savedInstanceState);
 
 
-            mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
-            mWeekPagerAdapter = new WeekPager(getActivity().getSupportFragmentManager());
-            mWeekPagerAdapter.notifyDataSetChanged();
-            mViewPager.setAdapter(mWeekPagerAdapter);
-            mViewPager.setCurrentItem(3);
-            mViewPager.setOffscreenPageLimit(0);
+        mViewPager = (ViewPager) rootView.findViewById(R.id.calendar_pager);
+        mWeekPagerAdapter = new WeekPager(getActivity().getSupportFragmentManager());
+        mWeekPagerAdapter.notifyDataSetChanged();
+        mViewPager.setAdapter(mWeekPagerAdapter);
+        mViewPager.setCurrentItem(3);
 
-        }
+
         return rootView;
     }
 
-    public class WeekPager extends FragmentPagerAdapter {
+    public class WeekPager extends FragmentStatePagerAdapter {
 
         private int mCount;
 
@@ -57,19 +56,21 @@ public class CalendarFragment extends Fragment {
 
         @Override
         public Fragment getItem(int position) {
+            Log.d("Trakt", "CalendarFragment get position: " + position);
             int onWeekInMIliSecconds = 604800000;
             Bundle arguments = new Bundle();
-            Fragment fragment  = new CalendarWeekFragment();
+            Fragment fragment = new CalendarWeekFragment();
             Log.d("Trakt", "current Position: " + position);
             if (position < 3) {
                 arguments.putInt("calendardate", -onWeekInMIliSecconds * (6 - position - 3));
 
             } else if (position > 3) {
-                arguments.putInt("calendardate", onWeekInMIliSecconds * (position-3));
+                arguments.putInt("calendardate", onWeekInMIliSecconds * (position - 3));
 
-            }else
-            arguments.putInt("calendardate",-1);
+            } else
+                arguments.putInt("calendardate", -1);
             fragment.setArguments(arguments);
+            Log.d("Trakt", "getItem laucnhing fragmetn");
             return fragment;
         }
 

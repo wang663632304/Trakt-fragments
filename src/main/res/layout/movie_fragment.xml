@@ -14,6 +14,7 @@
             android:id="@+id/imageViewEpisodeScreen"
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
             android:src="@drawable/episode_backdrop" />
 
         <TextView
@@ -148,7 +149,7 @@
             android:scaleType="centerCrop"
             android:layout_above="@+id/textViewEpisodeTitle"
             android:layout_alignLeft="@+id/imageViewEpisodeScreen"
-
+            android:adjustViewBounds="true"
             android:layout_marginLeft="20dp"
             android:src="@drawable/poster"/>
 

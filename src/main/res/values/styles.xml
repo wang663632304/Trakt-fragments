@@ -66,6 +66,9 @@
     <style name="CardText.1Line.Blue">
         <item name="android:textColor">@color/blue</item>
     </style>
+    <style name="CardText.1Line.White">
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="CardText.1Line">
         <item name="android:ellipsize">end</item>
@@ -121,6 +124,9 @@
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
     </style>
+    <style name="Item.Sticky.1Line.Blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
 
     <style name="AllCaps">
         <item name="android:layout_height">@dimen/sticky_height</item>
@@ -164,6 +170,16 @@
         <item name="android:textColor">@color/card_title_text</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
+    <style name="CardTitle.1line">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="CardTitle.1line.Blue">
+        <item name="android:textColor">@color/blue</item>
+    </style>
+
 
     <style name="frame_list_shows">
         <item name="android:background">@color/dark_grey</item>
@@ -179,6 +195,13 @@
         <item name="android:fontFamily">sans-serif</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Element_Spacing">
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+
+        <item  name="android:background">@drawable/card_background_shadow</item>
     </style>
 
 </resources>

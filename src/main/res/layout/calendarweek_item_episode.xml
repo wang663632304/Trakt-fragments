@@ -11,6 +11,7 @@
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
         android:id="@+id/imageViewCalendarEpisodeBackdrop"
+        android:adjustViewBounds="true"
         android:layout_width="200dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
@@ -21,7 +22,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:background="#80000000"
+        android:background="@color/transparentBlack"
         android:orientation="vertical"
         android:layout_alignLeft="@+id/imageViewCalendarEpisodeBackdrop"
         android:layout_alignRight="@+id/imageViewCalendarEpisodeBackdrop"
@@ -57,10 +58,48 @@
     </RelativeLayout>
 
     <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/imageViewCalendarEpisodeLoveTag"
+        android:src="@drawable/hearth_tag"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/imageViewCalendarEpisodeBackdrop"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/imageViewCalendarEpisodeHateTag"
+        android:src="@drawable/hated_tag"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:layout_alignRight="@+id/imageViewCalendarEpisodeBackdrop"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:id="@+id/imageViewCalendarEpisodeSeenTag"
         android:src="@drawable/seen_tag"
         android:layout_alignTop="@+id/imageViewCalendarEpisodeBackdrop"
         android:layout_alignRight="@+id/imageViewCalendarEpisodeBackdrop"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/imageViewCalendarEpisodeWatchlistTag"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_alignLeft="@+id/imageViewCalendarEpisodeBackdrop"
+        android:src="@drawable/watchlist_tag"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/imageViewCalendarEpisodeCollectionTag"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_alignLeft="@+id/imageViewCalendarEpisodeBackdrop"
+        android:src="@drawable/collections_tag"/>
+
+
+
 </RelativeLayout>

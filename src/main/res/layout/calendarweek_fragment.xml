@@ -15,4 +15,30 @@
         android:stretchMode="columnWidth"
         android:gravity="left"
         android:background="@color/calendar_background"/>
+
+    <RelativeLayout
+        android:id="@+id/emptyView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/calendar_background">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nothing on the calendar for this week"
+            android:id="@+id/textView"
+            style="@style/CardText.1Line.Bigger"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/empty_list"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
 </LinearLayout>
