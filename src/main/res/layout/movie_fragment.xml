@@ -153,6 +153,17 @@
             android:layout_marginLeft="20dp"
             android:src="@drawable/poster"/>
 
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/imageViewMoviePlayTrailer"
+            android:adjustViewBounds="true"
+            android:src="@drawable/play_trailer"
+            android:layout_alignTop="@+id/imageViewEpisodeScreen"
+            android:layout_alignLeft="@+id/imageViewEpisodeScreen"
+            android:layout_above="@+id/textViewEpisodeTitle"
+            android:layout_alignRight="@+id/imageViewEpisodeSeen"/>
+
     </RelativeLayout>
 
 </ScrollView>

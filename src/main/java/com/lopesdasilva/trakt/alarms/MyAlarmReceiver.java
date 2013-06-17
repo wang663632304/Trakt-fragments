@@ -88,34 +88,35 @@ public class MyAlarmReceiver extends BroadcastReceiver implements DownloadDayCal
     @Override
     public void OnDayCalendarTaskCompleted(List<CalendarDate> response) {
         Bundle arguments = new Bundle();
-        arguments.putSerializable("CalendarTonight", response.get(0));
+        if (response.size() != 0) {
+            arguments.putSerializable("CalendarTonight", response.get(0));
 
-        Log.d("Trakt", "Alarm a arguments send:" + response.get(0).episodes.size());
-        Intent episodes_tonight = new Intent(context, EpisodesTonightActivity.class);
-        episodes_tonight.putExtras(arguments);
-        PendingIntent intent = PendingIntent.getActivity(context, 0, episodes_tonight, PendingIntent.FLAG_ONE_SHOT);
+            Log.d("Trakt", "Alarm a arguments send:" + response.get(0).episodes.size());
+            Intent episodes_tonight = new Intent(context, EpisodesTonightActivity.class);
+            episodes_tonight.putExtras(arguments);
+            PendingIntent intent = PendingIntent.getActivity(context, 0, episodes_tonight, PendingIntent.FLAG_ONE_SHOT);
 
 
-        if (response.size() != 0)
-            if (response.get(0).episodes.size() != 0) {
-                Notification.Builder build = new Notification.Builder(context);
-                if (response.get(0).episodes.size() == 1) {
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
-                    build.setContentTitle(response.get(0).episodes.get(0).show.title + " on tonight")
-                            .setContentInfo(dateFormat.format(response.get(0).episodes.get(0).episode.firstAired))
-                            .setContentText("S" + response.get(0).episodes.get(0).episode.season + "E" + response.get(0).episodes.get(0).episode.number + " " + response.get(0).episodes.get(0).episode.title)
-                            .setTicker(response.get(0).episodes.get(0).show.title + " on tonight " + "S" + response.get(0).episodes.get(0).episode.season + "E" + response.get(0).episodes.get(0).episode.number + " " + response.get(0).episodes.get(0).episode.title);
-                } else {
-                    build.setContentTitle("You have " + response.get(0).episodes.size() + " TV shows on tonight")
-                            .setContentText("Click to see more")
-                            .setTicker("You have " +  response.get(0).episodes.size() + " TV shows on tonight");
-                }
-                build
+            if (response.size() != 0)
+                if (response.get(0).episodes.size() != 0) {
+                    Notification.Builder build = new Notification.Builder(context);
+                    if (response.get(0).episodes.size() == 1) {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm");
+                        build.setContentTitle(response.get(0).episodes.get(0).show.title + " on tonight")
+                                .setContentInfo(dateFormat.format(response.get(0).episodes.get(0).episode.firstAired))
+                                .setContentText("S" + response.get(0).episodes.get(0).episode.season + "E" + response.get(0).episodes.get(0).episode.number + " " + response.get(0).episodes.get(0).episode.title)
+                                .setTicker(response.get(0).episodes.get(0).show.title + " on tonight " + "S" + response.get(0).episodes.get(0).episode.season + "E" + response.get(0).episodes.get(0).episode.number + " " + response.get(0).episodes.get(0).episode.title);
+                    } else {
+                        build.setContentTitle("You have " + response.get(0).episodes.size() + " TV shows on tonight")
+                                .setContentText("Click to see more")
+                                .setTicker("You have " + response.get(0).episodes.size() + " TV shows on tonight");
+                    }
+                    build
 //                .setContentInfo("S" + episode_info.episode.season + "E" + episode_info.episode.number)
 //
-                        .setContentIntent(intent)
-                        .setSmallIcon(R.drawable.ic_launcher);
-                NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                            .setContentIntent(intent)
+                            .setSmallIcon(R.drawable.ic_launcher);
+                    NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 //                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 //
 //                    AQuery aq=
@@ -127,9 +128,9 @@ public class MyAlarmReceiver extends BroadcastReceiver implements DownloadDayCal
 //                            .build();
 //                    mNotificationManager.notify(0, notification);
 //                } else {
-                mNotificationManager.notify(0, build.build());
+                    mNotificationManager.notify(0, build.build());
 //                }
-
-            }
+                }
+        }
     }
 }

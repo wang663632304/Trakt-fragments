@@ -2,6 +2,9 @@ package com.lopesdasilva.trakt.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +13,7 @@ import android.view.*;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 import com.androidquery.AQuery;
 import com.jakewharton.trakt.ServiceManager;
 import com.jakewharton.trakt.entities.Movie;
@@ -261,9 +265,38 @@ public class MovieFragment extends Fragment implements DownloadMovieInfo.OnMovie
             mRefreshItem.setActionView(null);
         }
 
-        AQuery aq = new AQuery(getActivity());
+        final AQuery aq = new AQuery(getActivity());
         aq.id(R.id.textViewEpisodeTitle).text(movie_info.title);
-        aq.id(R.id.imageViewEpisodeScreen).image(movie_info.images.fanart, false, true, 600, R.drawable.episode_backdrop);
+        aq.id(R.id.imageViewEpisodeScreen).image(movie_info.images.fanart, false, true, 600, R.drawable.episode_backdrop) .clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!movie_info.trailer.equals(""))
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(movie_info.trailer)));
+                else
+                    Toast.makeText(getActivity(), "Trailer not available", Toast.LENGTH_SHORT).show();
+
+
+            }
+        }).getView().setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                switch (motionEvent.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        aq.id(R.id.imageViewMoviePlayTrailer).getImageView().setColorFilter(0xaf0099cc, PorterDuff.Mode.SRC_ATOP);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        aq.id(R.id.imageViewMoviePlayTrailer).getImageView().clearColorFilter();
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                        aq.id(R.id.imageViewMoviePlayTrailer).getImageView().clearColorFilter();
+                        break;
+                }
+
+                return false;
+            }
+        });
         aq.id(R.id.imageViewMoviePoster).image(movie_info.images.poster, false, true, 600, R.drawable.poster);
         aq.id(R.id.textViewEpisodeOverview).text(movie_info.overview);
         aq.id(R.id.textViewEpisodeRatingsPercentage).text(movie_info.ratings.percentage + "%");

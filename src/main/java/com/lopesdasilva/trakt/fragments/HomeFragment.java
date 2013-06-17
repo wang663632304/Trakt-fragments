@@ -24,7 +24,7 @@ public class HomeFragment extends Fragment {
 
             getFragmentManager().beginTransaction().replace(R.id.viewTrendingShows, new ShowsFragment(), "trending_shows").commit();
             getFragmentManager().beginTransaction().replace(R.id.viewTrendingMovies, new MoviesFragment(), "trending_movies").commit();
-
+            getFragmentManager().beginTransaction().replace(R.id.viewSocial,new FriendsFragment()).commit();
 
 
         return rootView;

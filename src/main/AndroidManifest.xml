@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.lopesdasilva.trakt"
-          android:versionCode="6"
-          android:versionName="1.06">
+          android:versionCode="8"
+          android:versionName="1.08">
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -25,8 +25,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <meta-data android:name="android.app.default_searchable"
-                       android:value="com.lopesdasilva.trakt.activities.SearchActivity" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.lopesdasilva.trakt.activities.SearchActivity"/>
 
         </activity>
         <activity
@@ -77,10 +78,11 @@
             android:name="com.lopesdasilva.trakt.activities.SearchActivity">
             android:launchMode="singleTop"
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                       android:resource="@xml/searchable"/>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
         </activity>
         <activity
             android:name=".Login"
